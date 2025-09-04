@@ -17,8 +17,8 @@ HIT-MAP
 
 
 
+High-throughput Integrated Tagging for cell MAPping (HIT-MAP), an efficient end-to-end pipeline for massively parallel endogenous protein tagging coupled to accelerated multi-modal acquisition of protein spatial imaging and biophysical interaction data. 
 
-High-throuput generation and integration of multiscale proteomic dataa
 
 
 * Free software: MIT license
@@ -26,12 +26,22 @@ High-throuput generation and integration of multiscale proteomic dataa
 * Source code: https://github.com/idekerlab/hit_map
 
 
-
 Dependencies
 ------------
 
-* `cellmaps_utils <https://pypi.org/project/cellmaps-utils>`__
 * `deconwolf <https://github.com/elgw/deconwolf.git>`__
+* `cellmaps pipeline <https://pypi.org/project/cellmaps-pipeline/>`__
+* `networkx <https://pypi.org/project/networkx>`__ 
+* `scipy <https://pypi.org/project/scipy>`__ 
+* `tqdm <https://pypi.org/project/tqdm>`__
+* `phenograph <https://pypi.org/project/phenograph>`__
+* `numpy <https://pypi.org/project/numpy>`__
+* `torch <https://pypi.org/project/torch>`__
+* `pandas <https://pypi.org/project/pandas>`__
+* `matplotlib <https://pypi.org/project/matplotlib>`__
+* `dill <https://pypi.org/project/dill>`__
+* `tqdm <https://pypi.org/project/tqdm>`__
+* `scipy <https://pypi.org/project/scipy/>`__
 
 Compatibility
 -------------
