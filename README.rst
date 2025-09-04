@@ -31,6 +31,7 @@ Dependencies
 ------------
 
 * `cellmaps_utils <https://pypi.org/project/cellmaps-utils>`__
+* `deconwolf <https://github.com/elgw/deconwolf.git>`__
 
 Compatibility
 -------------
