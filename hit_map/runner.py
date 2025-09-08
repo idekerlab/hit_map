@@ -157,78 +157,7 @@ class HitmapRunner(object):
                        'channel: blue: nucleus, green: targeted protein,red: microtubule yellow:ER'
                        'targetted_proteins: targetting protein of interest '
                        'save_prefix: save file prefix'
-        if not os.path.isdir(self._outdir):
-                os.makedirs(self._outdir, mode=0o755)
-        ### Generate the psf files
-        for key,value in self.microscope_setup_param['lambda']:
-            if not os.path.isdir(f'{self._outdir}/theoretical_psf'):
-                os.makedirs(f'{self._outdir}/theoretical_psf', mode=0o755)
-
-                
-            generate_theoretical_PSF(self.microscope_setup_param['ni'],
-                                     self.microscope_setup_param['NA'],
-                                     value,self.microscope_setup_param['resxy'],
-                                     self.microscope_setup_param['resz'],
-                                     f'{self._outdir}/theoretical_psf/{key}_psf.tiff', 
-                                     threads = self.microscope_setup_param['threads'])
-        print('Successfully generated theoretical PSF.')
         
-        ### Image deconvolution 
-        image_meta = pd.read_csv(self.image_meta,sep = '\t')
-        if not os.path.isdir(f'{self._outdir}/deconvoluted_images'):
-            os.makedirs(f'{self._outdir}/deconvoluted_images', mode=0o755)
-        if not os.path.isdir(f'{self._outdir}/deconvoluted_images/blue'):
-            os.makedirs(f'{self._outdir}/deconvoluted_images/blue', mode=0o755)
-        if not os.path.isdir(f'{self._outdir}/deconvoluted_images/red'):
-            os.makedirs(f'{self._outdir}/deconvoluted_images/red', mode=0o755)
-        if not os.path.isdir(f'{self._outdir}/deconvoluted_images/green'):
-            os.makedirs(f'{self._outdir}/deconvoluted_images/green', mode=0o755)
-        if not os.path.isdir(f'{self._outdir}/deconvoluted_images/yellow'):
-            os.makedirs(f'{self._outdir}/deconvoluted_images/yellow', mode=0o755)
-        if not os.path.isdir(f'{self._outdir}/deconvoluted_logs'):
-            os.makedirs(f'{self._outdir}/deconvoluted_logs', mode=0o755)
-        for i in image_meta.index.values:
-            format_deconwolf(image_meta.at[i,'file_directory'],
-                              f'{self._outdir}/theoretical_psf/{image_meta.at[i,'channel']}_psf.tiff',
-                              self.psigma,
-                              image_meta.at[i,'save_prefix'],
-                              iteration = 100)
-            src = f'./{image_meta.at[i,'save_prefix']}_{file_directory.split('/')[-1]}'
-            dst =  f'{self._outdir}/deconvoluted_images/{image_meta.at[i,'channel']}/{image_meta.at[i,'save_prefix']}_{file_directory.split('/')[-1]}'
-            ### Move the deconvoluted files
-            shutil.move(src, dst)
-            shutil.move(f"{src}.log.txt", f'{self._outdir}/deconvoluted_logs/{image_meta.at[i,'channel']}_{image_meta.at[i,'save_prefix']}_{file_directory.split('/')[-1]}.log.txt')
-        ### check the deconvolution output
-        all_items = os.listdir(f'{self._outdir}/deconvoluted_images/yellow')
-        print(f'{self._outdir}/deconvoluted_images/yellow: {len(all_items)}')
-        all_items = os.listdir(f'{self._outdir}/deconvoluted_images/green')
-        print(f'{self._outdir}/deconvoluted_images/green: {len(all_items)}')
-        all_items = os.listdir(f'{self._outdir}/deconvoluted_images/red')
-        print(f'{self._outdir}/deconvoluted_images/red: {len(all_items)}')
-        all_items = os.listdir(f'{self._outdir}/deconvoluted_images/blue')
-        print(f'{self._outdir}/deconvoluted_images/blue: {len(all_items)}')
-        
-        ### Deconvolution images z_max projection and enhancing 
-        if not os.path.isdir(f'{self._outdir}/z_max_projection'):
-            os.makedirs(f'{self._outdir}/z_max_projection', mode=0o755)
-        for channel in ['blue','green','yellow','red']:
-             if not os.path.isdir(f'{self._outdir}/z_max_projection/{channel}'):
-                os.makedirs(f'{self._outdir}/z_max_projection/{channel}', mode=0o755)
-            data_dir = f'{self._outdir}/deconvoluted_images/{channel}'
-            z_projection(data_dir,f'{self._outdir}/z_max_projection/{channel}', dz=1,dx=1)
-            all_items = os.listdir(f'{self._outdir}/z_max_projection/{channel}')
-            print(f'{self._outdir}/z_max_projection/{channel}: {len(all_items)}')
-        ### Image embedding 
-        generate_node_attribute(f'{self._outdir}/z_max_projection',f'{self._outdir}/z_max_projection')
-        if not os.path.isdir(f'{self._outdir}/embedding'):
-            os.makedirs(f'{self._outdir}/embedding', mode=0o755)
-       
-        cellmaps_image_embedding(f'{self._outdir}/z_max_projection',self.provenance_img,f'{self._outdir}/embedding/img_embedding')
-        cellmaps_image_embedding(self.ppi_dir,self.provenance_ppi,f'{self._outdir}/embedding/ppi_embedding')
-        cellmaps_co_embedding(f'{self._outdir}/embedding/img_embedding', f'{self._outdir}/embedding/ppi_embedding',f'{self._outdir}/embedding/co_embedding')
-        if self.generate_hierarchy:
-            cellmaps_generate_hierarchy(f'{self._outdir}/embedding/co_embedding', f'{self._outdir}/embedding/hierarchy')
-            cellmaps_hierarchyeval(f'{self._outdir}/embedding/hierarchy', f'{self._outdir}/embedding/hierarchy_eval'):
           
         exitcode = 99
         try:
@@ -244,6 +173,77 @@ class HitmapRunner(object):
                                            start_time=self._start_time,
                                            data={'commandlineargs': self._input_data_dict},
                                            version=hit_map.__version__)
+
+            ### Generate the psf files
+            for key,value in self.microscope_setup_param['lamb da']:
+                if not os.path.isdir(f'{self._outdir}/theoretical_psf'):
+                    os.makedirs(f'{self._outdir}/theoretical_psf', mode=0o755)
+
+
+                generate_theoretical_PSF(self.microscope_setup_param['ni'],
+                                         self.microscope_setup_param['NA'],
+                                         value,self.microscope_setup_param['resxy'],
+                                         self.microscope_setup_param['resz'],
+                                         f'{self._outdir}/theoretical_psf/{key}_psf.tiff', 
+                                         threads = self.microscope_setup_param['threads'])
+            print('Successfully generated theoretical PSF.')
+
+            ### Image deconvolution 
+            image_meta = pd.read_csv(self.image_meta,sep = '\t')
+            if not os.path.isdir(f'{self._outdir}/deconvoluted_images'):
+                os.makedirs(f'{self._outdir}/deconvoluted_images', mode=0o755)
+            if not os.path.isdir(f'{self._outdir}/deconvoluted_images/blue'):
+                os.makedirs(f'{self._outdir}/deconvoluted_images/blue', mode=0o755)
+            if not os.path.isdir(f'{self._outdir}/deconvoluted_images/red'):
+                os.makedirs(f'{self._outdir}/deconvoluted_images/red', mode=0o755)
+            if not os.path.isdir(f'{self._outdir}/deconvoluted_images/green'):
+                os.makedirs(f'{self._outdir}/deconvoluted_images/green', mode=0o755)
+            if not os.path.isdir(f'{self._outdir}/deconvoluted_images/yellow'):
+                os.makedirs(f'{self._outdir}/deconvoluted_images/yellow', mode=0o755)
+            if not os.path.isdir(f'{self._outdir}/deconvoluted_logs'):
+                os.makedirs(f'{self._outdir}/deconvoluted_logs', mode=0o755)
+            for i in image_meta.index.values:
+                format_deconwolf(image_meta.at[i,'file_directory'],
+                                  f'{self._outdir}/theoretical_psf/{image_meta.at[i,'channel']}_psf.tiff',
+                                  self.psigma,
+                                  image_meta.at[i,'save_prefix'],
+                                  iteration = 100)
+                src = f'./{image_meta.at[i,'save_prefix']}_{file_directory.split('/')[-1]}'
+                dst =  f'{self._outdir}/deconvoluted_images/{image_meta.at[i,'channel']}/{image_meta.at[i,'save_prefix']}_{file_directory.split('/')[-1]}'
+                ### Move the deconvoluted files
+                shutil.move(src, dst)
+                shutil.move(f"{src}.log.txt", f'{self._outdir}/deconvoluted_logs/{image_meta.at[i,'channel']}_{image_meta.at[i,'save_prefix']}_{file_directory.split('/')[-1]}.log.txt')
+            ### check the deconvolution output
+            all_items = os.listdir(f'{self._outdir}/deconvoluted_images/yellow')
+            print(f'{self._outdir}/deconvoluted_images/yellow: {len(all_items)}')
+            all_items = os.listdir(f'{self._outdir}/deconvoluted_images/green')
+            print(f'{self._outdir}/deconvoluted_images/green: {len(all_items)}')
+            all_items = os.listdir(f'{self._outdir}/deconvoluted_images/red')
+            print(f'{self._outdir}/deconvoluted_images/red: {len(all_items)}')
+            all_items = os.listdir(f'{self._outdir}/deconvoluted_images/blue')
+            print(f'{self._outdir}/deconvoluted_images/blue: {len(all_items)}')
+
+            ### Deconvolution images z_max projection and enhancing 
+            if not os.path.isdir(f'{self._outdir}/z_max_projection'):
+                os.makedirs(f'{self._outdir}/z_max_projection', mode=0o755)
+            for channel in ['blue','green','yellow','red']:
+                 if not os.path.isdir(f'{self._outdir}/z_max_projection/{channel}'):
+                    os.makedirs(f'{self._outdir}/z_max_projection/{channel}', mode=0o755)
+                data_dir = f'{self._outdir}/deconvoluted_images/{channel}'
+                z_projection(data_dir,f'{self._outdir}/z_max_projection/{channel}', dz=1,dx=1)
+                all_items = os.listdir(f'{self._outdir}/z_max_projection/{channel}')
+                print(f'{self._outdir}/z_max_projection/{channel}: {len(all_items)}')
+            ### Image embedding 
+            generate_node_attribute(f'{self._outdir}/z_max_projection',f'{self._outdir}/z_max_projection')
+            if not os.path.isdir(f'{self._outdir}/embedding'):
+                os.makedirs(f'{self._outdir}/embedding', mode=0o755)
+
+            cellmaps_image_embedding(f'{self._outdir}/z_max_projection',self.provenance_img,f'{self._outdir}/embedding/img_embedding')
+            cellmaps_image_embedding(self.ppi_dir,self.provenance_ppi,f'{self._outdir}/embedding/ppi_embedding')
+            cellmaps_co_embedding(f'{self._outdir}/embedding/img_embedding', f'{self._outdir}/embedding/ppi_embedding',f'{self._outdir}/embedding/co_embedding')
+            if self.generate_hierarchy:
+                cellmaps_generate_hierarchy(f'{self._outdir}/embedding/co_embedding', f'{self._outdir}/embedding/hierarchy')
+                cellmaps_hierarchyeval(f'{self._outdir}/embedding/hierarchy', f'{self._outdir}/embedding/hierarchy_eval')
 
             # set exit code to value passed in via constructor
             exitcode = self._exitcode
