@@ -166,7 +166,7 @@ Developed and maintained by the **Ideker Lab**.
 
 # Compatibility
 
-- Python 3.8+
+- Python 3.8 to Python 3.11
 
 # Usage
 
