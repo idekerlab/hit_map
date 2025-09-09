@@ -57,19 +57,9 @@ RUN git clone https://github.com/elgw/deconwolf.git /opt/deconwolf  && cd /opt/d
 ```
 
 ---
-##  🤸‍♀️🤸‍♀Running 
-### STEP 1: Clone the Repository
+##  Running 
 
-```bash
-git clone https://github.com/idekerlab/hit_map
-cd hit_map
-pip install -r requirements_dev.txt
-make install
-```
-
----
-
-### STEP 2: Setup Input
+### Setup Input
 
 Input includes **wide-field images** and **AP-MS PPI files**.
 
@@ -111,7 +101,7 @@ A `PPI_folder` containing `ppi_file.tsv` with filtered high-confidence PPIs.
 
 ---
 
-### STEP 3: Command Line Running
+### Command Line Running
 
 ```bash
 python hit_mapcmd.py   --image_meta /path/to/image_meta.tsv   --ppi_dir /path/to/ppi_file.tsv   --microscope_setup_param /path/to/microscope_setup_param.npy   --output_dir /path/to/save/outputfiles
@@ -135,7 +125,7 @@ You may edit these files manually for FAIR compliance or provide custom files vi
 
 ---
 
-### STEP 4: Output Files
+### Output Files
 
 All results will be stored under the specified `output_dir`:
 
@@ -178,120 +168,12 @@ Developed and maintained by the **Ideker Lab**.
 
 - Python 3.8+
 
-# Installation
-
-```bash
-git clone https://github.com/idekerlab/hit_map
-cd hit_map
-pip install -r requirements_dev.txt
-make install
-```
-
-Run the `make` command with no arguments to see other build/deploy options including creation of a Docker image:
-
-```bash
-make
-```
-
-**Output:**
-
-```
-clean                remove all build, test, coverage and Python artifacts
-clean-build          remove build artifacts
-clean-pyc            remove Python file artifacts
-clean-test           remove test and coverage artifacts
-lint                 check style with flake8
-test                 run tests quickly with the default Python
-test-all             run tests on every Python version with tox
-coverage             check code coverage quickly with the default Python
-docs                 generate Sphinx HTML documentation, including API docs
-servedocs            compile the docs watching for changes
-testrelease          package and upload a TEST release
-release              package and upload a release
-dist                 builds source and wheel package
-install              install the package to the active Python's site-packages
-dockerbuild          build docker image and store in local repository
-dockerpush           push image to dockerhub
-```
-
 # Usage
 
 For information, invoke:
 
 ```bash
 hit_mapcmd.py -h
-```
-
-**Example usage**
-
-> **TODO:** Add information about example usage
-
-```bash
-hit_mapcmd.py # TODO Add other needed arguments here
-```
-
-# For Developers
-
-⚠️ Note: Commands below assume you’ve already run:
-
-```bash
-pip install -r requirements_dev.txt
-```
-
-## Run Tests
-
-To run unit tests:
-
-```bash
-make test
-```
-
-## Make Documentation
-
-Documentation is stored under `docs/` and can be published on [Read the Docs](https://readthedocs.io).
-
-Install additional dependencies:
-
-```bash
-pip install -r docs/requirements.txt
-```
-
-Build the docs locally:
-
-```bash
-make docs
-```
-
-This will create HTML documentation under `docs/_build/html` and open it in your default browser.
-
-## Deploy Development Versions
-
-Steps to make changes, deploy, and run against them:
-
-1. **Make changes**  
-   Modify code in this repo as desired.
-
-2. **Build and deploy**
-
-   ```bash
-   # From base directory of this repo (hit_map)
-   pip uninstall hit_map -y
-   make clean dist
-   pip install dist/hit_map*whl
-   ```
-
-# Needed Files
-
-> **TODO:** Add description of needed files
-
-# Via Docker
-
-**Example usage**
-
-> **TODO:** Add information about example usage
-
-```bash
-Coming soon ...
 ```
 
 # Credits
