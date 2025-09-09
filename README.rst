@@ -16,6 +16,10 @@ Setup Running Environment
 
 Option 1: Local Installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Install **deconwolf** (https://elgw.github.io/deconwolf/), which is written in C.
+
+Follow the official installation instructions on their website. This can be installed in CUP or GPU.
+
 
 This repository requires the following Python packages::
 
@@ -38,10 +42,9 @@ Create a file named ``requirements.txt`` with the above list, then install via::
 
     pip install -r requirements.txt
 
-Additionally, install **deconwolf** (https://elgw.github.io/deconwolf/), which is written in C.
-Follow the official installation instructions on their website.
+Additionally, 
 
-Option 2: Run via Docker
+Option 2: Run via Docker (CUP)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 A Dockerfile is provided to build a reproducible environment. It can be found in ``docker/Dockerfile`` in this repo.
@@ -110,7 +113,7 @@ A ``microscope_setup_param.npy`` file is required with a dictionary containing:
 PPI Data
 ~~~~~~~~
 
-A ``PPI_folder`` containing ``ppi_file.tsv`` with filtered high-confidence PPIs.
+A ``PPI_folder`` containing ``ppi_edgelist.tsv`` with filtered high-confidence PPIs.
 
 
 Command Line Running
