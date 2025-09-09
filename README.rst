@@ -11,7 +11,7 @@ HIT-MAP
 Installation
 ============
 
-STEP 0: Setup Running Environment
+Setup Running Environment
 ---------------------------------
 
 Option 1: Local Installation
