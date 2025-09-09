@@ -31,13 +31,14 @@ RUN git clone https://github.com/elgw/deconwolf.git /opt/deconwolf \
 # (opencv-python-headless avoids GUI deps)
 RUN python3 -m pip install --upgrade pip \
  && python3 -m pip install \
-    numpy pandas scipy matplotlib \
-    opencv-python-headless \
-    multipagetiff \
-    cellmaps-utils \
-    fairscape-cli
-
-# Workdir where you’ll mount your repo + data
+      numpy \
+      pandas \
+      scipy \
+      matplotlib \
+      multipagetiff \
+      opencv-python-headless \
+      cellmaps-utils \
+      fairscape-cli \
+      cellmaps_pipeline
 WORKDIR /work
-
 # No ENTRYPOINT so you can choose: python, dw, dw_bw, or bash at runtime
