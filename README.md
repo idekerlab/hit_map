@@ -246,22 +246,6 @@ To run unit tests:
 make test
 ```
 
-To run tests in multiple Python environments defined by `tox.ini`:
-
-```bash
-make test-all
-```
-
-## Continuous Integration / Continuous Development
-
-A `.travis.yml` file is included in this repo to enable CI/CD via [Travis](https://travis-ci.com).
-
-The configuration leverages:
-- [coverage](https://pypi.org/project/coverage/)  
-- [coveralls](https://coveralls.io)  
-
-to log and report code coverage.
-
 ## Make Documentation
 
 Documentation is stored under `docs/` and can be published on [Read the Docs](https://readthedocs.io).
