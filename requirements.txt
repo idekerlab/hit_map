@@ -1,1 +1,11 @@
-cellmaps_utils
+cellmaps_pipeline
+networkx
+scipy
+tqdm
+phenograph
+numpy
+torch
+pandas
+matplotlib
+dill
+tqdm
