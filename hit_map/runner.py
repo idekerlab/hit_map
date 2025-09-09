@@ -5,6 +5,7 @@ import os
 import shutil
 import time
 import subprocess
+import sys
 
 import cv2
 import hit_map
@@ -100,7 +101,7 @@ class HitmapRunner(object):
             "--resz", str(resz),
             "--threads", str(threads),
             save_dir], check=True)
-        
+
 
     def format_deconwolf(self, image_dir, psf_dir, psigma, save_prefix, iteration):
         subprocess.run([
@@ -144,29 +145,35 @@ class HitmapRunner(object):
         df.to_csv(f"{save_dir}/1_image_gene_node_attributes.tsv", sep="\t", index=False)
 
     def cellmaps_image_embedding(self, image_dir, provenance, outdir):
-        subprocess.run(["cellmaps_image_embeddingcmd.py", outdir,
-        "--inputdir", image_dir,
-        "--provenance", provenance], check=True)
+        subprocess.run([
+            sys.executable, "-m", "cellmaps_image_embedding.cellmaps_image_embeddingcmd",
+            outdir, "--inputdir", image_dir, "--provenance", provenance
+        ], check=True)
 
     def cellmaps_PPI_embedding(self, ppi_score_file, provenance, outdir):
-        subprocess.run(["cellmaps_ppi_embeddingcmd.py", outdir,
-        "--inputdir", ppi_score_file,
-        "--provenance", provenance], check=True)
+        subprocess.run([
+            sys.executable, "-m", "cellmaps_ppi_embedding.cellmaps_ppi_embeddingcmd",
+            outdir, "--inputdir", ppi_score_file, "--provenance", provenance
+        ], check=True)
 
     def cellmaps_co_embedding(self, image_embedding_dir, ppi_embedding_dir, outdir):
         subprocess.run([
-            "cellmaps_coembeddingcmd.py", outdir,
-            "--embeddings", image_embedding_dir, ppi_embedding_dir], check=True)
+            sys.executable, "-m", "cellmaps_coembedding.cellmaps_coembeddingcmd",
+            outdir, "--embeddings", image_embedding_dir, ppi_embedding_dir
+        ], check=True)
 
 
     def cellmaps_generate_hierarchy(self, co_embedding_dir, out_dir):
-        subprocess.run(["cellmaps_generate_hierarchycmd.py", out_dir,
-        "--coembedding_dirs", co_embedding_dir], check=True)
+        subprocess.run([
+            sys.executable, "-m", "cellmaps_generate_hierarchy.cellmaps_generate_hierarchycmd",
+            out_dir, "--coembedding_dirs", co_embedding_dir
+        ], check=True)
 
     def cellmaps_hierarchyeval(self, hierarchy_dir, outdir):
         subprocess.run([
-            "cellmaps_hierarchyevalcmd.py", outdir,
-            "--hierarchy_dir", hierarchy_dir], check=True)
+            sys.executable, "-m", "cellmaps_hierarchyeval.cellmaps_hierarchyevalcmd",
+            outdir, "--hierarchy_dir", hierarchy_dir
+        ], check=True)
 
     def run(self):
         """
@@ -235,7 +242,7 @@ class HitmapRunner(object):
                     image_meta.at[i, "save_prefix"],
                     iteration=self.iteration,
                 )
-                
+
 
                 fd       = image_meta.at[i, 'file_directory']   # full path from the CSV
                 prefix   = image_meta.at[i, 'save_prefix']
