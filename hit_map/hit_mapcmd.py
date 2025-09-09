@@ -25,29 +25,28 @@ def _parse_arguments(desc, args):
     """
     parser = argparse.ArgumentParser(description=desc,
                                      formatter_class=constants.ArgParseFormatter)
-
-    parser.add_argument('--image_meta',type=str,
-                       help='image meta file with the following columns'
-                       'file_directory: image direcotry'
-                       'channel: blue: nucleus, green: targeted protein,red: microtubule yellow:ER'
-                       'targetted_proteins: targetting protein of interest '
-                       'save_prefix: save file prefix'
-                      )
-    parser.add_argument('--ppi_dir',type=str,
-                       help='directory to the AP-MS PPI zmadex scoring file'
-                       '.tsv file with header no index'
-                      )
-    parser.add_argument('--microscope_setup_param',type=str,
-                       help='directory of the dictionary of microscope setup parameter .npy'
-                       'keys including:'
-                       'ni: refractive index, float'
-                       ' NA: numerical aperture,float' 
-                       'lambda: wavelength, dictionary {blue:int, red:int, green: int, yellow: int}'
-                       'resxy: pixel size, int'
-                       'resz: destance between panels,int'
-                       'threads: for multiprocessing,int')
-    parser.add_argument('--psigma', type = float,
-                       help = 'psigma parameter for deconwolf')
+    parser.add_argument('--image_meta', type=str,
+                        help='image meta file with the following columns'
+                             'file_directory: image direcotry'
+                             'channel: blue: nucleus, green: targeted protein,red: microtubule yellow:ER'
+                             'targetted_proteins: targetting protein of interest '
+                             'save_prefix: save file prefix'
+                        )
+    parser.add_argument('--ppi_dir', type=str,
+                        help='directory to the AP-MS PPI zmadex scoring file'
+                             '.tsv file with header no index'
+                        )
+    parser.add_argument('--microscope_setup_param', type=str,
+                        help='directory of the dictionary of microscope setup parameter .npy'
+                             'keys including:'
+                             'ni: refractive index, float'
+                             ' NA: numerical aperture,float'
+                             'lambda: wavelength, dictionary {blue:int, red:int, green: int, yellow: int}'
+                             'resxy: pixel size, int'
+                             'resz: destance between panels,int'
+                             'threads: for multiprocessing,int')
+    parser.add_argument('--psigma', type=float,
+                        help='psigma parameter for deconwolf')
     parser.add_argument('--provenance_img',
                         help='Path to file containing provenance of image '
                              'information about input files in JSON format. '
@@ -58,9 +57,10 @@ def _parse_arguments(desc, args):
                              'information about input files in JSON format. '
                              'This is required if inputdir does not contain '
                              'ro-crate-metadata.json file.')
-    parser.add_argument('--generate_hierarchy',default = True,type = bool,
-                       help= 'Generate hierarchy from co-embedding of the image/AP-MS'
-                       'default is true, will generate hierarchy from running louvain in the embedding space')
+    parser.add_argument("--generate_hierarchy", action="store_true", default=False,
+                        help='Generate hierarchy from co-embedding of the image/AP-MS. '
+                             'Default is False. Use this flag to enable hierarchy generation.'
+                        )
     parser.add_argument('--outdir',
                         help='Directory to write results to')
     parser.add_argument('--logconf', default=None,
@@ -113,16 +113,16 @@ def main(args):
     theargs = _parse_arguments(desc, args[1:])
     theargs.program = args[0]
     theargs.version = hit_map.__version__
-    
 
     try:
         logutils.setup_cmd_logging(theargs)
-        return HitmapRunner(image_meta = theargs.image_meta,
-                            ppi_dir = theargs.ppi_dir,
-                            microscope_setup_param = theargs.microscope_setup_param,
-                            psigma = theargs.psigma,
-                            provenance_img = theargs.provenance_img,
-                            provenance_ppi = theargs.provenance_ppi,
+        return HitmapRunner(image_meta=theargs.image_meta,
+                            ppi_dir=theargs.ppi_dir,
+                            microscope_setup_param=theargs.microscope_setup_param,
+                            psigma=theargs.psigma,
+                            provenance_img=theargs.provenance_img,
+                            provenance_ppi=theargs.provenance_ppi,
+                            generate_hierarchy=theargs.generate_hierarchy,
                             outdir=theargs.outdir,
                             exitcode=theargs.exitcode,
                             skip_logging=theargs.skip_logging,
