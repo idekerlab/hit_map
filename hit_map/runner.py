@@ -58,7 +58,7 @@ class HitmapRunner(object):
             raise HitmapError('outdir is None')
         self.image_meta =image_meta
         self.ppi_dir = ppi_dir
-        self.microscope_setup_param = microscope_setup_param
+        self.microscope_setup_param = np.load(microscope_setup_param, allow_pickle=True).item()
         self.psigma =psigma
         self.provenance_img = provenance_img
         self.provenance_ppi = provenance_ppi

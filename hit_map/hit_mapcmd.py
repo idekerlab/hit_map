@@ -37,8 +37,8 @@ def _parse_arguments(desc, args):
                        help='directory to the AP-MS PPI zmadex scoring file'
                        '.tsv file with header no index'
                       )
-    parser.add_argument('--microscope_setup_param',type=dict,
-                       help='dictionary of microscope setup parameter '
+    parser.add_argument('--microscope_setup_param',type=str,
+                       help='directory of the dictionary of microscope setup parameter .npy'
                        'keys including:'
                        'ni: refractive index, float'
                        ' NA: numerical aperture,float' 
