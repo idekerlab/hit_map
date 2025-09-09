@@ -47,6 +47,8 @@ def _parse_arguments(desc, args):
                              'threads: for multiprocessing,int')
     parser.add_argument('--psigma', type=float,
                         help='psigma parameter for deconwolf')
+    parser.add_argument('--iteration', type=int,
+                        help='iterations for Richar-lucy')
     parser.add_argument('--provenance_img',
                         help='Path to file containing provenance of image '
                              'information about input files in JSON format. '
@@ -121,6 +123,7 @@ def main(args):
                             psigma=theargs.psigma,
                             provenance_img=theargs.provenance_img,
                             provenance_ppi=theargs.provenance_ppi,
+                            iteration=theargs.iteration,
                             generate_hierarchy=theargs.generate_hierarchy,
                             outdir=theargs.outdir,
                             exitcode=theargs.exitcode,

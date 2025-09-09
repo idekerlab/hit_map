@@ -33,6 +33,7 @@ class HitmapRunner(object):
         provenance_img=None,
         provenance_ppi=None,
         generate_hierarchy=True,
+        iteration=100,
         exitcode=None,
         skip_logging=True,
         input_data_dict=None,
@@ -63,7 +64,7 @@ class HitmapRunner(object):
         self.provenance_img = provenance_img
         self.provenance_ppi = provenance_ppi
         self.generate_hierarchy = generate_hierarchy
-
+        self.iteration = iteration
         self._outdir = os.path.abspath(outdir)
 
         self._exitcode = exitcode
@@ -101,7 +102,7 @@ class HitmapRunner(object):
             save_dir], check=True)
         
 
-    def format_deconwolf(self, image_dir, psf_dir, psigma, save_prefix, iteration=100):
+    def format_deconwolf(self, image_dir, psf_dir, psigma, save_prefix, iteration):
         subprocess.run([
             "dw",
             "--iter", str(iteration),
@@ -226,26 +227,37 @@ class HitmapRunner(object):
             if not os.path.isdir(f"{self._outdir}/deconvoluted_logs"):
                 os.makedirs(f"{self._outdir}/deconvoluted_logs", mode=0o755)
             for i in image_meta.index.values:
+
                 self.format_deconwolf(
                     image_meta.at[i, "file_directory"],
                     f"{self._outdir}/theoretical_psf/{image_meta.at[i, 'channel']}_psf.tiff",
                     self.psigma,
                     image_meta.at[i, "save_prefix"],
-                    iteration=100,
+                    iteration=self.iteration,
                 )
-                src = f"./{image_meta.at[i, 'save_prefix']}_{file_directory.split('/')[-1]}"  # noqa: F821
-                dst = (
-                    f"{self._outdir}/deconvoluted_images/{image_meta.at[i, 'channel']}/"
-                    f"{image_meta.at[i, 'save_prefix']}_{file_directory.split('/')[-1]}"  # noqa: F821
-                )
-                # ### Move the deconvoluted files
+                
+
+                fd       = image_meta.at[i, 'file_directory']   # full path from the CSV
+                prefix   = image_meta.at[i, 'save_prefix']
+                channel  = image_meta.at[i, 'channel']
+                base     = os.path.basename(fd)                  # just the filename
+
+                src = f"{'/'.join(fd.split('/')[:-1])}/{prefix}_{fd.split('/')[-1]}"
+
+                dst_dir = os.path.join(self._outdir, 'deconvoluted_images', str(channel))
+                os.makedirs(dst_dir, exist_ok=True)
+                dst = os.path.join(dst_dir, f"{prefix}_{base}")
+
+                # Move the deconvolved file
                 shutil.move(src, dst)
-                shutil.move(
-                    f"{src}.log.txt",
-                    f"{self._outdir}/deconvoluted_logs/"
-                    f"{image_meta.at[i, 'channel']}_{image_meta.at[i, 'save_prefix']}_"
-                    f"{file_directory.split('/')[-1]}.log.txt",  # noqa: F821
-                )
+
+                # Move the log file
+                log_src = f"{src}.log.txt"
+                log_dir = os.path.join(self._outdir, 'deconvoluted_logs')
+                os.makedirs(log_dir, exist_ok=True)
+                log_dst = os.path.join(log_dir, f"{channel}_{prefix}_{base}.log.txt")
+                shutil.move(log_src, log_dst)
+
             # ### check the deconvolution output
             all_items = os.listdir(f"{self._outdir}/deconvoluted_images/yellow")
             print(f"{self._outdir}/deconvoluted_images/yellow: {len(all_items)}")
