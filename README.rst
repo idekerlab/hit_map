@@ -19,7 +19,12 @@ Option 1: Local Installation
 
 This repository requires the following Python packages::
 
-    cellmaps_pipeline
+    cellmaps_utils
+    cellmaps-image-embedding
+    cellmaps-ppi-embedding
+    cellmaps-coembedding
+    cellmaps-generate-hierarchy
+    cellmaps-hierarchyeval
     os
     shutil
     time
@@ -28,7 +33,6 @@ This repository requires the following Python packages::
     multipagetiff
     numpy
     pandas
-    cellmaps_utils
 
 Create a file named ``requirements.txt`` with the above list, then install via::
 
@@ -50,7 +54,7 @@ Clone repo and build the docker image::
 
 Run::
 
-    docker run --rm -it \                              
+    docker run --rm -it \
       -v "$(pwd)":/work -w /work \
       hitmap:latest \
       python3 -m hit_map.hit_mapcmd \

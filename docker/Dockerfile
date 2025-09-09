@@ -39,6 +39,10 @@ RUN python3 -m pip install --upgrade pip \
       opencv-python-headless \
       cellmaps-utils \
       fairscape-cli \
-      cellmaps_pipeline
+      cellmaps-image-embedding \
+      cellmaps-ppi-embedding \
+      cellmaps-coembedding \
+      cellmaps-generate-hierarchy \
+      cellmaps-hierarchyeval
 WORKDIR /work
 # No ENTRYPOINT so you can choose: python, dw, dw_bw, or bash at runtime
