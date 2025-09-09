@@ -1,0 +1,41 @@
+{
+  "name": "Name for pipeline run",
+  "organization-name": "Name of lab or group. Ex: Ideker",
+  "project-name": "Name of funding source or project",
+  "cell-line": "Name of cell line. Ex: U2OS",
+  "treatment": "Name of treatment, Ex: untreated",
+  "release": "Name of release. Example: 0.1 alpha",
+  "gene-set": "Name of gene set. Example chromatin",
+  "edgelist": {
+    "name": "Name of dataset",
+    "author": "Author of dataset",
+    "version": "Version of dataset",
+    "date-published": "Date dataset was published",
+    "description": "Description of dataset",
+    "data-format": "Format of data"
+  },
+  "baitlist": {
+    "name": "Name of dataset",
+    "author": "Author of dataset",
+    "version": "Version of dataset",
+    "date-published": "Date dataset was published",
+    "description": "Description of dataset",
+    "data-format": "Format of data"
+  },
+  "samples": {
+    "name": "Name of dataset",
+    "author": "Author of dataset",
+    "version": "Version of dataset",
+    "date-published": "Date dataset was published",
+    "description": "Description of dataset",
+    "data-format": "Format of data"
+  },
+  "unique": {
+    "name": "Name of dataset",
+    "author": "Author of dataset",
+    "version": "Version of dataset",
+    "date-published": "Date dataset was published",
+    "description": "Description of dataset",
+    "data-format": "Format of data"
+  }
+}
