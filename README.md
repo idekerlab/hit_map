@@ -174,162 +174,145 @@ Please open an issue or submit a pull request to collaborate.
 Developed and maintained by the **Ideker Lab**. 
 
 
-Compatibility
--------------
+# Compatibility
 
-* Python 3.8+
+- Python 3.8+
 
-Installation
-------------
+# Installation
 
-.. code-block::
+```bash
+git clone https://github.com/idekerlab/hit_map
+cd hit_map
+pip install -r requirements_dev.txt
+make install
+```
 
-   git clone https://github.com/idekerlab/hit_map
-   cd hit_map
-   pip install -r requirements_dev.txt
-   make install
+Run the `make` command with no arguments to see other build/deploy options including creation of a Docker image:
 
+```bash
+make
+```
 
-Run **make** command with no arguments to see other build/deploy options including creation of Docker image
+**Output:**
 
-.. code-block::
+```
+clean                remove all build, test, coverage and Python artifacts
+clean-build          remove build artifacts
+clean-pyc            remove Python file artifacts
+clean-test           remove test and coverage artifacts
+lint                 check style with flake8
+test                 run tests quickly with the default Python
+test-all             run tests on every Python version with tox
+coverage             check code coverage quickly with the default Python
+docs                 generate Sphinx HTML documentation, including API docs
+servedocs            compile the docs watching for changes
+testrelease          package and upload a TEST release
+release              package and upload a release
+dist                 builds source and wheel package
+install              install the package to the active Python's site-packages
+dockerbuild          build docker image and store in local repository
+dockerpush           push image to dockerhub
+```
 
-   make
+# Usage
 
-Output:
+For information, invoke:
 
-.. code-block::
-
-   clean                remove all build, test, coverage and Python artifacts
-   clean-build          remove build artifacts
-   clean-pyc            remove Python file artifacts
-   clean-test           remove test and coverage artifacts
-   lint                 check style with flake8
-   test                 run tests quickly with the default Python
-   test-all             run tests on every Python version with tox
-   coverage             check code coverage quickly with the default Python
-   docs                 generate Sphinx HTML documentation, including API docs
-   servedocs            compile the docs watching for changes
-   testrelease          package and upload a TEST release
-   release              package and upload a release
-   dist                 builds source and wheel package
-   install              install the package to the active Python's site-packages
-   dockerbuild          build docker image and store in local repository
-   dockerpush           push image to dockerhub
-
-Usage
------
-
-For information invoke :code:`hit_mapcmd.py -h`
+```bash
+hit_mapcmd.py -h
+```
 
 **Example usage**
 
-**TODO:** Add information about example usage
+> **TODO:** Add information about example usage
 
-.. code-block::
+```bash
+hit_mapcmd.py # TODO Add other needed arguments here
+```
 
-   hit_mapcmd.py # TODO Add other needed arguments here
+# For Developers
 
-For developers
--------------------------------------------
+⚠️ Note: Commands below assume you’ve already run:
 
-.. note::
+```bash
+pip install -r requirements_dev.txt
+```
 
-    Commands below assume ``pip install -r requirements_dev.txt`` has been run
-
-Run tests
-~~~~~~~~~~
+## Run Tests
 
 To run unit tests:
 
-.. code-block::
+```bash
+make test
+```
 
-    make test
+To run tests in multiple Python environments defined by `tox.ini`:
 
-To run tests in multiple python environments defined by ``tox.ini``:
+```bash
+make test-all
+```
 
-.. code-block::
+## Continuous Integration / Continuous Development
 
-    make test-all
+A `.travis.yml` file is included in this repo to enable CI/CD via [Travis](https://travis-ci.com).
 
-Continuous integration / Continuous development
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The configuration leverages:
+- [coverage](https://pypi.org/project/coverage/)  
+- [coveralls](https://coveralls.io)  
 
-A ``.travis.yml`` file is included in this
-repo to easily enable continous integration / continuous development
-via `Travis <https://travis-ci.com>`__
+to log and report code coverage.
 
-The configuration leverages `coverage <https://pypi.org/project/coverage/>`__
-and `coveralls <https://coveralls.io>`__ to log
-code coverage
+## Make Documentation
 
+Documentation is stored under `docs/` and can be published on [Read the Docs](https://readthedocs.io).
 
-Make documentation
-~~~~~~~~~~~~~~~~~~~~
+Install additional dependencies:
 
-Documentation for this code is stored under ``docs/`` and can
-be easily configured for display on `Read the Docs <https://readthedocs.io>`__
-once the repo is linked from within `Read the Docs <https://readthedocs.io>`__
-via github account
+```bash
+pip install -r docs/requirements.txt
+```
 
-Command below requires additional packages that can be installed
-with this command:
+Build the docs locally:
 
-.. code-block::
+```bash
+make docs
+```
 
-    pip install -r docs/requirements.txt
+This will create HTML documentation under `docs/_build/html` and open it in your default browser.
 
-Running the command below creates html documentation under
-``docs/_build/html`` that is displayed to the user via
-"default" browser
+## Deploy Development Versions
 
-.. code-block::
+Steps to make changes, deploy, and run against them:
 
-    make docs
+1. **Make changes**  
+   Modify code in this repo as desired.
 
+2. **Build and deploy**
 
-To deploy development versions of this package
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   ```bash
+   # From base directory of this repo (hit_map)
+   pip uninstall hit_map -y
+   make clean dist
+   pip install dist/hit_map*whl
+   ```
 
-Below are steps to make changes to this code base, deploy, and then run
-against those changes.
+# Needed Files
 
-#. Make changes
+> **TODO:** Add description of needed files
 
-   Modify code in this repo as desired
-
-#. Build and deploy
-
-.. code-block::
-
-    # From base directory of this repo hit_map
-    pip uninstall hit_map -y ; make clean dist; pip install dist/hit_map*whl
-
-
-
-Needed files
-------------
-
-**TODO:** Add description of needed files
-
-
-Via Docker
-~~~~~~~~~~~~~~~~~~~~~~
+# Via Docker
 
 **Example usage**
 
-**TODO:** Add information about example usage
+> **TODO:** Add information about example usage
 
+```bash
+Coming soon ...
+```
 
-.. code-block::
+# Credits
 
-   Coming soon ...
+This package was created with [Cookiecutter](https://github.com/audreyr/cookiecutter) and the [audreyr/cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage) project template.
 
-Credits
--------
+- [NDEx](http://www.ndexbio.org)
 
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-.. _NDEx: http://www.ndexbio.org
