@@ -27,6 +27,7 @@ torch
 pandas
 matplotlib
 dill
+multipagetiff
 ```
 
 📌 Create a file named `requirements.txt` with the above list, then install via:
