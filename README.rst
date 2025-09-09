@@ -64,7 +64,7 @@ Run::
         --psigma 2.0 \
         --provenance_img /work/hit_map/provenance_files/provenance_image.json \
         --provenance_ppi /work/hit_map/provenance_files/provenance_ppi.json \
-        --outdir /work/mydir2 --generate_hierarchy
+        --outdir /work/mydir
 
 Running
 =======

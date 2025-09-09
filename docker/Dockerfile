@@ -1,5 +1,6 @@
 FROM ubuntu:22.04
 
+
 ENV DEBIAN_FRONTEND=noninteractive \
     PIP_NO_CACHE_DIR=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -11,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential cmake pkg-config \
     python3 python3-pip python3-venv \
     libfftw3-dev libgsl-dev libomp-dev libpng-dev libtiff-dev \
-    libglib2.0-0 \
+    libglib2.0-0 libgl1 \
  && update-ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 
@@ -31,18 +32,16 @@ RUN git clone https://github.com/elgw/deconwolf.git /opt/deconwolf \
 # (opencv-python-headless avoids GUI deps)
 RUN python3 -m pip install --upgrade pip \
  && python3 -m pip install \
-      numpy \
-      pandas \
-      scipy \
-      matplotlib \
-      multipagetiff \
-      opencv-python-headless \
-      cellmaps-utils \
-      fairscape-cli \
-      cellmaps-image-embedding \
-      cellmaps-ppi-embedding \
-      cellmaps-coembedding \
-      cellmaps-generate-hierarchy \
-      cellmaps-hierarchyeval
+    numpy pandas scipy matplotlib \
+    opencv-python-headless \
+    multipagetiff \
+    cellmaps-utils \
+    fairscape-cli \
+    cellmaps-image-embedding==0.3.3 \
+    cellmaps-ppi-embedding==0.4.3 \
+    cellmaps-coembedding==1.3.1
+
+# Workdir where you’ll mount your repo + data
 WORKDIR /work
+
 # No ENTRYPOINT so you can choose: python, dw, dw_bw, or bash at runtime

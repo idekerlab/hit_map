@@ -295,7 +295,7 @@ class HitmapRunner(object):
                 self.provenance_img,
                 f"{self._outdir}/embedding/img_embedding",
             )
-            self.cellmaps_image_embedding(
+            self.cellmaps_PPI_embedding(
                 self.ppi_dir,
                 self.provenance_ppi,
                 f"{self._outdir}/embedding/ppi_embedding",
