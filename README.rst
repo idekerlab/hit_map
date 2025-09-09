@@ -40,7 +40,27 @@ Follow the official installation instructions on their website.
 Option 2: Run via Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-A Dockerfile is provided to build a reproducible environment. See: docker/Dockerfile
+A Dockerfile is provided to build a reproducible environment. It can be found in ``docker/Dockerfile`` in this repo.
+
+Clone repo and build the docker image::
+
+    git clone git@github.com:idekerlab/hit_map.git
+    cd hit_map
+    docker build -f docker/Dockerfile -t hitmap:latest .
+
+Run::
+
+    docker run --rm -it \                              
+      -v "$(pwd)":/work -w /work \
+      hitmap:latest \
+      python3 -m hit_map.hit_mapcmd \
+        --image_meta /work/tests/image_meta.tsv \
+        --ppi_dir /work/tests/PPI_folder \
+        --microscope_setup_param /work/tests/microscope_setup_param.npy \
+        --psigma 2.0 \
+        --provenance_img /work/hit_map/provenance_files/provenance_image.json \
+        --provenance_ppi /work/hit_map/provenance_files/provenance_ppi.json \
+        --outdir /work/mydir2 --generate_hierarchy
 
 Running
 =======
