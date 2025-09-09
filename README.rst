@@ -7,7 +7,6 @@ HIT-MAP
 - **Documentation**: https://hit-map.readthedocs.io
 - **Source code**: https://github.com/idekerlab/hit_map
 
----
 
 Installation
 ============
@@ -85,8 +84,6 @@ A Dockerfile is provided to build a reproducible environment. Example::
 
     # No ENTRYPOINT so you can choose: python, dw, dw_bw, or bash at runtime
 
----
-
 Running
 =======
 
@@ -133,7 +130,6 @@ PPI Data
 
 A ``PPI_folder`` containing ``ppi_file.tsv`` with filtered high-confidence PPIs.
 
----
 
 Command Line Running
 --------------------
@@ -159,8 +155,6 @@ You may edit these files manually for FAIR compliance or provide custom files vi
     --provenance_img
     --provenance_ppi
 
----
-
 Output Files
 ------------
 
@@ -181,14 +175,12 @@ All results will be stored under the specified ``output_dir``:
 
 - **hierarchy_eval/**: evaluation results (enrichment against HPA, GO, CORUM, etc.)
 
----
 
 License
 =======
 
 This project is licensed under the **MIT License**. See the ``LICENSE`` file for details.
 
----
 
 Contributing
 ============
@@ -196,21 +188,18 @@ Contributing
 Contributions, issues, and feature requests are welcome.
 Please open an issue or submit a pull request to collaborate.
 
----
 
 Authors
 =======
 
 Developed and maintained by the **Ideker Lab**.
 
----
 
 Compatibility
 =============
 
 - Python 3.8 to Python 3.11
 
----
 
 Usage
 =====
@@ -219,7 +208,6 @@ For information, invoke::
 
     hit_mapcmd.py -h
 
----
 
 Credits
 =======
