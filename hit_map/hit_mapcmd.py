@@ -89,7 +89,6 @@ def _parse_arguments(desc, args):
     parser.add_argument('--version', action='version',
                         version=('%(prog)s ' +
                                  hit_map.__version__))
-
     return parser.parse_args(args)
 
 

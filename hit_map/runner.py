@@ -62,7 +62,6 @@ class HitmapRunner(object):
         self.psigma = psigma
         self.provenance_img = provenance_img
         self.provenance_ppi = provenance_ppi
-        self.provenance_ppi = provenance_ppi
         self.generate_hierarchy = generate_hierarchy
 
         self._outdir = os.path.abspath(outdir)
@@ -91,33 +90,25 @@ class HitmapRunner(object):
         :param save_dir: output file with name and directory
         :param threads: integer, for multiprocessing
         """
-        subprocess.run(
-            [
-                "dw_bw",
-                f"--ni {ni}",
-                f"--NA {NA}",
-                f"--lambda {lamb}",
-                f"--resxy {resxy}",
-                f"--resz {resz}",
-                f"--threads {threads}",
-                save_dir,
-            ],
-            check=False,
-        )
+        subprocess.run([
+            "dw_bw",
+            "--ni", str(ni),
+            "--NA", str(NA),
+            "--lambda", str(lamb),
+            "--resxy", str(resxy),
+            "--resz", str(resz),
+            "--threads", str(threads),
+            save_dir], check=True)
+        
 
     def format_deconwolf(self, image_dir, psf_dir, psigma, save_prefix, iteration=100):
-        subprocess.run(
-            [
-                "dw",
-                f"--iter {iteration}",
-                image_dir,
-                psf_dir,
-                f"--psigma {psigma}",
-                f"--prefix {save_prefix}",
-            ],
-            check=False,
-        )
-
+        subprocess.run([
+            "dw",
+            "--iter", str(iteration),
+            image_dir,
+            psf_dir,
+            "--psigma", str(psigma),
+            "--prefix", str(save_prefix)], check=True)
     def z_max_projection(self, img_stack, channel=0):
         # channel 0 is default channel to stack
         return np.max(img_stack, axis=channel)
@@ -152,34 +143,29 @@ class HitmapRunner(object):
         df.to_csv(f"{save_dir}/1_image_gene_node_attributes.tsv", sep="\t", index=False)
 
     def cellmaps_image_embedding(self, image_dir, provenance, outdir):
-        subprocess.run(
-            ["cellmaps_image_embeddingcmd.py", outdir, f"--inputdir {image_dir}", f"--provenance {provenance}"],
-            check=False,
-        )
+        subprocess.run(["cellmaps_image_embeddingcmd.py", outdir,
+        "--inputdir", image_dir,
+        "--provenance", provenance], check=True)
 
     def cellmaps_PPI_embedding(self, ppi_score_file, provenance, outdir):
-        subprocess.run(
-            ["cellmaps_ppi_embeddingcmd.py", outdir, f"--inputdir {ppi_score_file}", f"--provenance {provenance}"],
-            check=False,
-        )
+        subprocess.run(["cellmaps_ppi_embeddingcmd.py", outdir,
+        "--inputdir", ppi_score_file,
+        "--provenance", provenance], check=True)
 
     def cellmaps_co_embedding(self, image_embedding_dir, ppi_embedding_dir, outdir):
-        subprocess.run(
-            ["cellmaps_coembeddingcmd.py", outdir, f"--embeddings {image_embedding_dir} {ppi_embedding_dir}"],
-            check=False,
-        )
+        subprocess.run([
+            "cellmaps_coembeddingcmd.py", outdir,
+            "--embeddings", image_embedding_dir, ppi_embedding_dir], check=True)
+
 
     def cellmaps_generate_hierarchy(self, co_embedding_dir, out_dir):
-        subprocess.run(
-            ["cellmaps_generate_hierarchycmd.py", out_dir, f"--coembedding_dirs {co_embedding_dir}"],
-            check=False,
-        )
+        subprocess.run(["cellmaps_generate_hierarchycmd.py", out_dir,
+        "--coembedding_dirs", co_embedding_dir], check=True)
 
     def cellmaps_hierarchyeval(self, hierarchy_dir, outdir):
-        subprocess.run(
-            ["cellmaps_hierarchyevalcmd.py", outdir, f"--hierarchy_dir {hierarchy_dir}"],
-            check=False,
-        )
+        subprocess.run([
+            "cellmaps_hierarchyevalcmd.py", outdir,
+            "--hierarchy_dir", hierarchy_dir], check=True)
 
     def run(self):
         """
@@ -210,7 +196,7 @@ class HitmapRunner(object):
             )
 
             # ### Generate the psf files
-            for key, value in self.microscope_setup_param["lamb da"]:
+            for key, value in self.microscope_setup_param["lambda"].items():
                 if not os.path.isdir(f"{self._outdir}/theoretical_psf"):
                     os.makedirs(f"{self._outdir}/theoretical_psf", mode=0o755)
 
