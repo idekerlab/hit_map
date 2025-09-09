@@ -139,7 +139,7 @@ class HitmapRunner(object):
         for file in os.listdir(f"{input_dir}/blue"):
             if file.endswith(".jpg"):
                 filename.append("_".join(file.split("_")[:-1]) + "_")
-                name.append(file.split("_")[0])
+                name.append(file.split("_")[1]) ### name of the gene
         df = pd.DataFrame({"name": name, "filename": filename})
         df.to_csv(f"{save_dir}/1_image_gene_node_attributes.tsv", sep="\t", index=False)
 
