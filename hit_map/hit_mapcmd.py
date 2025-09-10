@@ -49,6 +49,8 @@ def _parse_arguments(desc, args):
                         help='psigma parameter for deconwolf')
     parser.add_argument('--iteration', type=int,
                         help='iterations for Richar-lucy')
+    parser.add_argument('--k', type=int,default =10,
+                        help='k nearest neighbors value used for clustering - clustering used for triplet loss')
     parser.add_argument('--provenance_img',
                         help='Path to file containing provenance of image '
                              'information about input files in JSON format. '
@@ -124,6 +126,7 @@ def main(args):
                             provenance_img=theargs.provenance_img,
                             provenance_ppi=theargs.provenance_ppi,
                             iteration=theargs.iteration,
+                            k = theargs.k,
                             generate_hierarchy=theargs.generate_hierarchy,
                             outdir=theargs.outdir,
                             exitcode=theargs.exitcode,

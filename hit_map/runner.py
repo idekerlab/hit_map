@@ -35,6 +35,7 @@ class HitmapRunner(object):
         provenance_ppi=None,
         generate_hierarchy=True,
         iteration=100,
+        k = None,
         exitcode=None,
         skip_logging=True,
         input_data_dict=None,
@@ -66,6 +67,7 @@ class HitmapRunner(object):
         self.provenance_ppi = provenance_ppi
         self.generate_hierarchy = generate_hierarchy
         self.iteration = iteration
+        self.k = k
         self._outdir = os.path.abspath(outdir)
 
         self._exitcode = exitcode
@@ -156,14 +158,16 @@ class HitmapRunner(object):
             outdir, "--inputdir", ppi_score_file, "--provenance", provenance
         ], check=True)
 
-    def cellmaps_co_embedding(self, image_embedding_dir, ppi_embedding_dir, outdir):
+    def cellmaps_co_embedding(self, image_embedding_dir, ppi_embedding_dir, outdir, k):
         subprocess.run([
             sys.executable, "-m", "cellmaps_coembedding.cellmaps_coembeddingcmd",
-            outdir, "--embeddings", image_embedding_dir, ppi_embedding_dir
+            outdir, "--embeddings", image_embedding_dir, ppi_embedding_dir, "--k", k
         ], check=True)
 
 
+
     def cellmaps_generate_hierarchy(self, co_embedding_dir, out_dir):
+        
         subprocess.run([
             sys.executable, "-m", "cellmaps_generate_hierarchy.cellmaps_generate_hierarchycmd",
             out_dir, "--coembedding_dirs", co_embedding_dir
@@ -304,6 +308,7 @@ class HitmapRunner(object):
                 f"{self._outdir}/embedding/img_embedding",
                 f"{self._outdir}/embedding/ppi_embedding",
                 f"{self._outdir}/embedding/co_embedding",
+                self.k
             )
             if self.generate_hierarchy:
                 self.cellmaps_generate_hierarchy(
