@@ -18,7 +18,7 @@ Option 1: Local Installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Install **deconwolf** (https://elgw.github.io/deconwolf/), which is written in C.
 
-Follow the official installation instructions on their website. This can be installed in CUP or GPU.
+Follow the official installation instructions on their website. This can be installed in either CPU or GPU.
 
 
 This repository requires the following Python packages::
