@@ -146,14 +146,19 @@ Output Files
 All results will be stored under the specified ``output_dir``:
 
 - **deconvoluted_images/**: deconvolved ``.tif`` images (PSF corrected)
-  - subfolders: blue, green, red, yellow
+ 
+    - subfolders: blue, green, red, yellow
 
 - **z_max_projection/**: Z-max projected ``.jpg`` images
+
   - subfolders: blue, green, red, yellow
 
 - **embedding/**: data embeddings
+
   - ``img_embedding/``: ``img_emb.tsv`` (image embeddings capturing protein localization)
+
   - ``ppi_embedding/``: ``ppi_emb.tsv`` (PPI network embeddings)
+
   - ``co_embedding/``: ``co_emb.tsv`` (joint protein embedding space)
 
 - **hierarchy/**: ``.cx2`` file of co-embedded hierarchy clustered using HiDef
