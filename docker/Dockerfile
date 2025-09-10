@@ -28,8 +28,17 @@ RUN git clone https://github.com/elgw/deconwolf.git /opt/deconwolf \
  && printf "/usr/local/lib\n" > /etc/ld.so.conf.d/usrlocal.conf \
  && ldconfig
 
+ # ---- Install igraph + leidenalg (with modern build toolchain) ----
+# 1) Make sure we have Python headers & modern setuptools/wheel in the build env
+RUN apt-get update && apt-get install -y --no-install-recommends python3-dev && rm -rf /var/lib/apt/lists/* \
+ && python3 -m pip install --upgrade "setuptools>=70" "wheel>=0.43" "setuptools-scm>=8" "pybind11>=2.10"
+
+# 2) Try to use wheels for igraph (most aarch64 images have them)
+RUN python3 -m pip install "igraph>=0.11,<0.12" \
+ # 3) Build/install leidenalg using our upgraded toolchain (no isolated old setuptools)
+ && python3 -m pip install --no-build-isolation "leidenalg==0.9.1"
+
 # ---- Python deps for your CLI and runner ----
-# (opencv-python-headless avoids GUI deps)
 RUN python3 -m pip install --upgrade pip \
  && python3 -m pip install \
     numpy pandas scipy matplotlib \
@@ -39,7 +48,9 @@ RUN python3 -m pip install --upgrade pip \
     fairscape-cli \
     cellmaps-image-embedding==0.3.3 \
     cellmaps-ppi-embedding==0.4.3 \
-    cellmaps-coembedding==1.4.0
+    cellmaps-coembedding==1.4.0 \
+    cellmaps-generate-hierarchy==0.2.4 \
+    cellmaps-hierarchyeval==0.2.2
 
 # Workdir where you’ll mount your repo + data
 WORKDIR /work
