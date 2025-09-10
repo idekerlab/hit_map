@@ -147,7 +147,7 @@ All results will be stored under the specified ``output_dir``:
 
 - **deconvoluted_images/**: deconvolved ``.tif`` images (PSF corrected)
  
-    - subfolders: blue, green, red, yellow
+  - subfolders: blue, green, red, yellow
 
 - **z_max_projection/**: Z-max projected ``.jpg`` images
 
