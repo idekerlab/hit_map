@@ -161,7 +161,7 @@ class HitmapRunner(object):
     def cellmaps_co_embedding(self, image_embedding_dir, ppi_embedding_dir, outdir, k):
         subprocess.run([
             sys.executable, "-m", "cellmaps_coembedding.cellmaps_coembeddingcmd",
-            outdir, "--embeddings", image_embedding_dir, ppi_embedding_dir, "--k", k
+            outdir, "--embeddings", image_embedding_dir, ppi_embedding_dir, "--k", str(k)
         ], check=True)
 
 
