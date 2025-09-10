@@ -39,7 +39,7 @@ RUN python3 -m pip install --upgrade pip \
     fairscape-cli \
     cellmaps-image-embedding==0.3.3 \
     cellmaps-ppi-embedding==0.4.3 \
-    cellmaps-coembedding==1.3.1
+    cellmaps-coembedding==1.4.0
 
 # Workdir where you’ll mount your repo + data
 WORKDIR /work
