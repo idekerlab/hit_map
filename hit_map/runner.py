@@ -299,6 +299,11 @@ class HitmapRunner(object):
                 self.provenance_img,
                 f"{self._outdir}/embedding/img_embedding",
             )
+            ### Handle multiple images problem
+            img_emb = pd.read_csv(f"{self._outdir}/embedding/img_embedding/image_emd.tsv",
+                              sep = '\t', index_col = 0).groupby(level=0).mean()
+            img_emb.to_csv(f"{self._outdir}/embedding/img_embedding/image_emd.tsv", 
+                           sep = '\t', header= False)
             self.cellmaps_PPI_embedding(
                 self.ppi_dir,
                 self.provenance_ppi,
