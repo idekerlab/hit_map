@@ -126,7 +126,7 @@ def main(args):
                             provenance_img=theargs.provenance_img,
                             provenance_ppi=theargs.provenance_ppi,
                             iteration=theargs.iteration,
-                            k = theargs.k,
+                            k=theargs.k,
                             generate_hierarchy=theargs.generate_hierarchy,
                             outdir=theargs.outdir,
                             exitcode=theargs.exitcode,
