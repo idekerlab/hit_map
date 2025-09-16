@@ -55,4 +55,9 @@ RUN python3 -m pip install --upgrade pip \
 # Workdir where you’ll mount your repo + data
 WORKDIR /work
 
+# Add symlinks for fairscape and hidef to /usr/bin since ENV PATH
+# does not seem to be working 
+RUN ln -s /usr/local/bin/fairscape-cli /usr/bin/fairscape-cli
+RUN ln -s /usr/local/bin/hidef_finder.py /usr/bin/hidef_finder.py
+
 # No ENTRYPOINT so you can choose: python, dw, dw_bw, or bash at runtime
