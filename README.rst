@@ -69,6 +69,12 @@ Run::
         --provenance_ppi /work/hit_map/provenance_files/provenance_ppi.json \
         --outdir /work/mydir
 
+For MacBooks with ARM processors, add ``--platform linux/amd64`` when building the image and running the command::
+
+    docker buildx build --platform linux/amd64 -f docker/Dockerfile -t hitmap:latest .
+
+    docker run --platform linux/amd64 --rm -it ...
+
 Running
 =======
 
